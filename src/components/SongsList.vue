@@ -1,26 +1,30 @@
 <template>
   <section class="songs-container d-flex justify-content-center align-items-center">
-    <div class="container row">
+    <div v-if="!loading" class="container row">
       <!-- Stampo la lista delle canzoni ottenuta tramite Axios API -->
       <div v-for="(song, index) in songsList" :key="index" class="single-song">
         <Song :info="song" />
       </div>
     </div>
+    <Loader v-else />
   </section>
 </template>
 
 <script>
 import axios from 'axios';
 import Song from "./Song.vue";
+import Loader from './Loader.vue';
 export default {
   name: 'SongsList',
   components: {
-    Song
+    Song,
+    Loader
   },
   data() {
     return {
       APIUrl: 'https://flynn.boolean.careers/exercises/api/array/music',
-      songsList: []
+      songsList: [],
+      loading: true
     }
   },
   created() {
@@ -32,6 +36,10 @@ export default {
           .get(this.APIUrl)
           .then( res => {
             this.songsList = res.data.response;
+            this.loading = false;
+          })
+          .catch( err => {
+            console.log("Error ", err);
           })
     }
   }
