@@ -20,7 +20,7 @@ export default {
 header {
     height: 70px;
     width: 100%;
-    background: #2e3a46;
+    background: $bg-header;
     .img-logo{
       height: 100%;
       display: flex;
