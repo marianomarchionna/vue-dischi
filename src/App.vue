@@ -1,23 +1,16 @@
 <template>
   <div id="app" class="text-center">
-    <img alt="Vue logo" src="./assets/spotify.jpg">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="#">Home</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Library</li>
-  </ol>
-</nav>
+    <Header/>  
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Header from './components/Header.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Header
   }
 }
 </script>
