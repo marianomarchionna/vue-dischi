@@ -1,0 +1,11 @@
+//import Bootstrap
+@import 'bootstrap';
+
+@import '~@fontsource/montserrat/index.css';
+@import '~@fontsource/montserrat/700.css';
+
+@import './vars';
+
+body {
+    font-family: $main-font;
+}
