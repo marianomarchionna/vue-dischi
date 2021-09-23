@@ -2,13 +2,14 @@
   <section class="songs-container d-flex justify-content-center align-items-center">
     <div v-if="!loading" class="container row">
       <!-- Stampo la lista delle canzoni ottenuta tramite Axios API -->
-      <div v-for="(song, index) in songsList" :key="index" class="single-song">
-        <Song :info="song" />
-      </div>
+      <Song v-for="(song, index) in filteredAlbums" 
+        :key="index"
+        :info="song" class="single-song"/>
     </div>
     <Loader v-else />
   </section>
 </template>
+
 
 <script>
 import axios from 'axios';
@@ -16,6 +17,7 @@ import Song from "./Song.vue";
 import Loader from './Loader.vue';
 export default {
   name: 'SongsList',
+  props: ['lastValue'],
   components: {
     Song,
     Loader
@@ -24,11 +26,9 @@ export default {
     return {
       APIUrl: 'https://flynn.boolean.careers/exercises/api/array/music',
       songsList: [],
-      loading: true
+      loading: true,
+      genreArray: []
     }
-  },
-  created() {
-    this.getSongs();
   },
   methods: {
     getSongs() {
@@ -41,7 +41,38 @@ export default {
           .catch( err => {
             console.log("Error ", err);
           })
-    }
+    },
+    getGenre() {
+            axios
+                .get(this.APIUrl)
+                .then( response => {
+                    let array = response.data.response;
+                    for (let i = 0; i < array.length; i++) {
+                        if (!this.genreArray.includes(array[i].genre)) {
+                            this.genreArray.push(array[i].genre)
+                        } 
+                    }
+                })
+                this.$emit('genreArr', this.genreArray);
+        }
+    },
+  computed: {
+        filteredAlbums() {
+            if (this.lastValue == '') {
+                return this.songsList
+            } else {
+                const filteredArray = this.songsList.filter((element) => {
+                    if(element.genre == this.lastValue) {
+                        return element;
+                    } 
+                });
+                return filteredArray;
+            }
+        },
+  },
+  created() {
+    this.getSongs();
+    this.getGenre();
   }
 }
 </script>
@@ -59,5 +90,4 @@ export default {
         cursor: pointer;
     }
 }
-
 </style>

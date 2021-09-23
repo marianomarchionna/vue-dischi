@@ -1,7 +1,16 @@
 <template>
   <header>
-    <div class="img-logo ms-3">
+    <div class="img-logo ms-3 me-3 d-flex justify-content-between">
       <img src="../assets/spotify.png" alt="Logo Spotify">
+      <form> 
+        <label for="genre"></label>
+        <select v-model="inputValue" 
+          @change="$emit('emitGenre', inputValue)" 
+          name="genre" id="genre">
+          <option value="">All</option>
+          <option v-for="(genre, index) in allGenre" :key="index" :value="genre">{{ genre }}</option>
+        </select>
+      </form>
     </div>
   </header>
 </template>
@@ -9,8 +18,12 @@
 <script>
 export default {
   name: 'Header',
-  props: {
-  }
+    props: ['allGenre'],
+    data() {
+        return {
+            inputValue: ''
+        }
+    }
 }
 </script>
 

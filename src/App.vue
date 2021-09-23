@@ -1,7 +1,14 @@
 <template>
   <div id="app" class="text-center">
-    <Header/> 
-    <SongsList/> 
+    <Header
+    @emitGenre="getGenre" 
+    :allGenre="genreArray"
+    />
+    <main>
+    <SongsList 
+    @genreArr="getArrGenre"
+    :lastValue="selectValue" />
+    </main>
   </div>
 </template>
 
@@ -14,6 +21,20 @@ export default {
   components: {
     Header,
     SongsList
+  },
+  data() {
+    return {
+      selectValue: '',
+      genreArray: []
+    }
+  },
+  methods: {
+    getGenre(value) {
+      this.selectValue = value;
+    },
+    getArrGenre(array) {
+      this.genreArray = array;
+    }
   }
 }
 </script>
